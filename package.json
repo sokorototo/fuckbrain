@@ -1,0 +1,12 @@
+{
+  "name": "fuckbrain",
+  "version": "0.0.1",
+  "description": "A simple customizable brainfuck interpreter",
+  "main": "build/fuckbrain.min.js",
+  "repository": "https://github.com/sokorototo/fuckbrain",
+  "author": "Newton Toto <nyachiengatoto@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "./build/"
+  ]
+}
