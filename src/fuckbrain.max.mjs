@@ -1,89 +1,151 @@
-import {readFileSync} from "fs";
+class Machine{
+    constructor(config = {}){
+        // Default State Initialization
+        this.pointer = 0;
+        this.output = [];
+        this.stack = [];
+        this.execution = 0;
 
-let commands = new Map();
-commands.set("+", (machine) => {
-    machine.tape[machine.pointer] ++
-});
-commands.set("-", (machine) => {
-    machine.tape[machine.pointer] --
-});
-commands.set("<", (machine) => {
-    if (machine.pointer > 0) machine.pointer --;
-});
-commands.set(">", (machine) => {
-    machine.pointer ++;
-    if (machine.pointer >= (machine.tape.length - 1)) machine.pointer = machine.tape.length;
-});
-commands.set("[", (machine, brainfuck) => {
-    if (machine.tape[machine.pointer] != 0) {
-        machine.stack.push(machine.execution);
-    } else {
-        let tracker = 0;
-        while (true) {
-            machine.execution ++;
-            let instruction = brainfuck[machine.execution];
-            if(!instruction) return;
-            switch (instruction) {
-                case "[":
-                    tracker += 1
-                    break;
-                case "]":
-                    tracker -= 1
-                    break;
-            }
-
-            if (tracker < 0) return;
+        // Configurable State Initialization
+        this.length = config.length || 30000;
+        switch (config.bitSize || 1) {
+            // Bits per cell
+            case 1: 
+                // Meaning undefned bitSize, since it defaulted to 1
+                this.tape = new Uint8Array(this.length);
+                break;
+            case 8:
+                this.tape = new Uint8Array(this.length);
+                break;
+            case 16:
+                this.tape = new Uint16Array(this.length);
+                break;
+            case 32:
+                this.tape = new Uint32Array(this.length);
+                break;
+            default:
+                // bitSize was neither undefined nor any of the supported values
+                console.error(`[INFO] Unsupported bitSize: ${ config.bitSize }, defaulting to 8 bits per cell`);
+                this.tape = new Uint8Array(this.length);
+                break;
         }
+        this.InstructionSet = config.InstructionSet || Machine.InstructionSet(1);
     }
-});
-commands.set("]", (machine) => {
-    if(machine.tape[machine.pointer] == 0) return machine.stack.pop();
-    machine.execution = machine.stack[machine.stack.length - 1]
-});
-commands.set(".", (machine) => {
-    machine.output.push(String.fromCharCode(machine.tape[machine.pointer]))
-})
-commands.set(",", (machine) => {
-    machine.tape[machine.pointer] = machine.input.shift()?.charCodeAt(0) || 0;
-});
 
-let machine = {
-    commands,
-    tape: new Uint8Array(30000),
-    pointer: 0,
-    input: `PiEre`.split(""),
-    output: [],
-    stack: [],
-    execution: 0,
-
-    run(brainfuck) {
-        brainfuck = brainfuck.split("".trim()).filter(x => this.commands.has(x)) //.forEach(command => machine.commands.get(command)(machine));
+    run(brainfuck, input) {
+        brainfuck = brainfuck.trim("").split("").filter(x => this.InstructionSet.has(x)) // Compress to one loop
         while (true) {
-            let instruction = brainfuck[this.execution];
-            this.commands.get(instruction)(this, brainfuck);
-            this.execution += 1;
+            try{
+                let instruction = brainfuck[this.execution];
+                this.InstructionSet.get(instruction)(this, brainfuck, input);
+            }catch (e) {
+                throw new Error(`${e}; [MEMORY] ${this.pointer}; [EXECUTION] ${this.execution}; [STACK] ${ "[" + this.stack.join() + "]" }`);
+            }
+            this.execution ++;
 
-            if (this.execution >= brainfuck.length) {
-                break
-            };
+            if (this.execution >= brainfuck.length) break;
         }
 
-        console.log(this.output.join(""));
-
+        let copy = this.output.slice();
+        this.reset();
+        return copy;
+    }
+    reset(){
         // Reset the machine
         this.execution = 0;
         this.pointer = 0;
         this.output = [];
         this.stack = [];
-        this.tape.fill(0, 0, 49999);
+        this.tape.fill(0);
     }
-}
+    
+    static InstructionSet( type = 1 ){
+        let InstructionSet = new Map();
+        InstructionSet.set("+", (machine) => {
+            machine.tape[machine.pointer] ++
+        });
+        InstructionSet.set("-", (machine) => {
+            machine.tape[machine.pointer] --
+        });
+        InstructionSet.set("<", (machine) => {
+            if (machine.pointer > 0) machine.pointer --;
+        });
+        InstructionSet.set(">", (machine) => {
+            if (machine.pointer < (machine.tape.length - 1)) machine.pointer ++;
+        });
+        InstructionSet.set("[", (machine, brainfuck) => {
+            if (machine.tape[machine.pointer] != 0) return machine.stack.push(machine.execution);
+            
+            // Jump If Zero
+            let tracker = 1;
+            while (true) {
+                machine.execution ++;
+                if(machine.execution >= (brainfuck.length - 1)) {
+                    throw new Error(`Unmatched "[" at position: ${machine.pointer}`)
+                };
+                
+                let instruction = brainfuck[machine.execution];
+                switch (instruction) {
+                    case "[":
+                        tracker ++
+                        break;
+                    case "]":
+                        tracker --
+                        break;
+                }
 
-machine.run(readFileSync("examples/asciiart/text.bf", "utf8"));
+                console.log(machine.execution, instruction, tracker,brainfuck.length);
+                if (tracker == 0) return;
+            }
+        });
+        InstructionSet.set("]", (machine) => {
+            // No matching "[" found in stack
+            if(machine.stack.length == 0) throw new Error(`Unmatched "]"`);
 
-/**
- * Extra functions coming:
- * (*) Read value from current storage
- * (&) Set value in current location to storage
- * (!) Send pointer to value in storage
- */
+            // Jump Unless Zero
+            if(machine.tape[machine.pointer] == 0) return machine.stack.pop();
+            machine.execution = machine.stack[machine.stack.length - 1];
+        });
+        InstructionSet.set(".", (machine) => {
+             machine.output.push(String.fromCharCode(machine.tape[machine.pointer]))
+        })
+        InstructionSet.set(",", (machine, _, input) => {
+            let next = input.next();
+            if (next.done) {
+                machine.tape[machine.pointer] = 0;
+                return;
+            };
+
+            // next.calue must be either a number or a string
+            if (typeof next.value != "number") throw new Error("Encountered input not of type Number");
+            machine.tape[machine.pointer] = next.value || 0;
+        });
+
+        // Extra Varinats
+        switch (type) {
+            case 2:
+                // Brainfuck Type 2
+                break;
+            case 3:
+                // Brainfuck Type 3
+                break;
+        }
+
+        return InstructionSet
+    }
+    static StringInputGenerator(input) {
+        return {
+            input,
+            index: 0,
+            next(){
+                if (this.index > (this.input.length - 1)) return { done: true, value: 0 };
+                this.index ++;
+                return { done: false, value: this.input[this.index - 1].charCodeAt(0) }
+            },
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol
+            [Symbol.iterator](){ return this }
+        }
+    }
+};
+
+export default Machine;
