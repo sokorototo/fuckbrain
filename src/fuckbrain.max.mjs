@@ -74,15 +74,13 @@ class Machine{
             if (machine.pointer < (machine.tape.length - 1)) machine.pointer ++;
         });
         InstructionSet.set("[", (machine, brainfuck) => {
+            if (machine.execution  == brainfuck.length - 1) throw new Error(`Unmatched "[" at last position: ${machine.pointer}`); // The last "[" obviously has no pair
             if (machine.tape[machine.pointer] != 0) return machine.stack.push(machine.execution);
             
             // Jump If Zero
             let tracker = 1;
             while (true) {
                 machine.execution ++;
-                if(machine.execution >= (brainfuck.length - 1)) {
-                    throw new Error(`Unmatched "[" at position: ${machine.pointer}`)
-                };
                 
                 let instruction = brainfuck[machine.execution];
                 switch (instruction) {
@@ -94,8 +92,8 @@ class Machine{
                         break;
                 }
 
-                console.log(machine.execution, instruction, tracker,brainfuck.length);
-                if (tracker == 0) return;
+                if (tracker == 0) return; // Matching "["" found
+                if (machine.execution >= (brainfuck.length - 1)) throw new Error(`Unmatched "[" at position: ${machine.pointer}`); // End of brainfuck input
             }
         });
         InstructionSet.set("]", (machine) => {
@@ -133,7 +131,8 @@ class Machine{
 
         return InstructionSet
     }
-    static StringInputGenerator(input) {
+
+    static StringInputGenerator( input ) {
         return {
             input,
             index: 0,
@@ -142,7 +141,19 @@ class Machine{
                 this.index ++;
                 return { done: false, value: this.input[this.index - 1].charCodeAt(0) }
             },
+
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol
+            [Symbol.iterator](){ return this }
+        }
+    }
+    static BrowserPromptInputGenerator( question = "[INPUT] Brainfuck asks of your input:" ){
+        return {
+            question,
+            next(){
+                let answer = prompt(question, "");
+                if(!!answer) return { done: false, value: answer.charCodeAt(0) };
+                return { done: true, value: 0 }
+            },
             [Symbol.iterator](){ return this }
         }
     }
