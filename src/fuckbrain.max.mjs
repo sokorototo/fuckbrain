@@ -5,13 +5,15 @@ class Machine{
         this.output = [];
         this.stack = [];
         this.execution = 0;
+        this.metadata = {};
+        this.__continue = true;
 
         // Configurable State Initialization
         this.length = config.length || 30000;
-        switch (config.bitSize || 1) {
+        switch (config.cellSize || 1) {
             // Bits per cell
             case 1: 
-                // Meaning undefned bitSize, since it defaulted to 1
+                // Meaning undefned cellSize, since it defaulted to 1
                 this.tape = new Uint8Array(this.length);
                 break;
             case 8:
@@ -24,21 +26,28 @@ class Machine{
                 this.tape = new Uint32Array(this.length);
                 break;
             default:
-                // bitSize was neither undefined nor any of the supported values
-                console.error(`[INFO] Unsupported bitSize: ${ config.bitSize }, defaulting to 8 bits per cell`);
+                // cellSize was neither undefined nor any of the supported values
+                console.error(`[INFO] Unsupported cellSize: ${ config.cellSize }, defaulting to 8 bits per cell`);
                 this.tape = new Uint8Array(this.length);
                 break;
         }
         this.InstructionSet = config.InstructionSet || Machine.InstructionSet(1);
     }
 
-    run(brainfuck, input) {
-        brainfuck = brainfuck.trim("").split("").filter(x => this.InstructionSet.has(x)) // Compress to one loop
+    run(initial, input, output) {
+        let brainfuck = [];
+        for (let i = 0; i < initial.length; i++) {
+            // filter out unwanted invalid Instructions for speeeeeed
+            const instruction = initial[i];
+            if(this.InstructionSet.has(instruction)) brainfuck.push(instruction);
+        }
+
         while (true) {
+            if(! this.__continue) break;
             try{
                 let instruction = brainfuck[this.execution];
-                this.InstructionSet.get(instruction)(this, brainfuck, input);
-            }catch (e) {
+                this.InstructionSet.get(instruction)(this, brainfuck, input, output);
+            } catch (e) {
                 throw new Error(`${e}; [MEMORY] ${this.pointer}; [EXECUTION] ${this.execution}; [STACK] ${ "[" + this.stack.join() + "]" }`);
             }
             this.execution ++;
@@ -48,15 +57,25 @@ class Machine{
 
         let copy = this.output.slice();
         this.reset();
+
+        // Forward output
+        if(!!output){
+            if(typeof output.complete == "function") output.complete(copy);
+        };
         return copy;
+    }
+    terminate(){
+        this.__continue = false;
     }
     reset(){
         // Reset the machine
+        this.stack = [];
+        this.tape.fill(0);
         this.execution = 0;
         this.pointer = 0;
         this.output = [];
-        this.stack = [];
-        this.tape.fill(0);
+        this.metadata = {};
+        this.__continue = true;
     }
     
     static InstructionSet( type = 1 ){
@@ -104,8 +123,12 @@ class Machine{
             if(machine.tape[machine.pointer] == 0) return machine.stack.pop();
             machine.execution = machine.stack[machine.stack.length - 1];
         });
-        InstructionSet.set(".", (machine) => {
-             machine.output.push(String.fromCharCode(machine.tape[machine.pointer]))
+        InstructionSet.set(".", (machine, _, __, output) => {
+            let currentValue = String.fromCharCode(machine.tape[machine.pointer]);
+            if(!!output){
+                if(typeof output.write == "function") output.write(currentValue);
+            };
+            machine.output.push(currentValue);
         })
         InstructionSet.set(",", (machine, _, input) => {
             let next = input.next();
@@ -146,7 +169,7 @@ class Machine{
             [Symbol.iterator](){ return this }
         }
     }
-    static BrowserPromptInputGenerator( question = "[INPUT] Brainfuck asks of your input:" ){
+    static BrowserPromptInputGenerator( question = "[INPUT] Brainfuck asks of your input, leave empty to exit:" ){
         return {
             question,
             next(){
