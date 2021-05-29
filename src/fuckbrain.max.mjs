@@ -1,3 +1,4 @@
+"use strict";
 class Machine{
     constructor(config = {}){
         // Default State Initialization
@@ -35,8 +36,8 @@ class Machine{
     }
 
     run(initial, input, output) {
-        let brainfuck = [];
-        for (let i = 0; i < initial.length; i++) {
+        let brainfuck = [], iterations = initial.length;
+        for (let i = 0; i < iterations; i++) {
             // filter out unwanted invalid Instructions for speeeeeed
             const instruction = initial[i];
             if(this.InstructionSet.has(instruction)) brainfuck.push(instruction);

@@ -5,11 +5,12 @@
 <p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,
 </p></br>
 <p align=center> Customizable and Easy to use · Works in Node and Deno · Contains seceral variants* of Brainfuck </p></br>
-<p align=center><a>npm</a> · <a> deno.land </a></p></br>
+<p align=center><img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"><img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"><img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"><a href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a></p></br>
+<p align=center><a href="https://www.npmjs.com/package/fuckbrain">npm</a> · <a> deno.land </a></p></br>
 
 
 
-### _Introduction_ 🐣
+### 🐣  _Introduction_
 
 ----
 
@@ -19,7 +20,7 @@
 
 
 
-### _Why I made this_ 🥼
+### 🥼 _Why I made this_
 
 - I love code, its what I do 🥽.
 - I was watching a video by [TheHappieCat](https://youtu.be/-3C200nCwpk), and I thought to myself, "Hmm, I could probably write a brainfuck interpreter."
@@ -31,7 +32,7 @@
 
 
 
-### *Installation* ⏬
+### ⏬ *Installation* 
 
 ##### CDN.
 Deliver the package via a cdn:
@@ -84,7 +85,7 @@ import Machine from "fuckbrain.min.mjs";
 
 
 
-### ***Prerequisite*** ⛽
+### ⛽ ***Prerequisite***
 
 To ensure that _fuckbrain_ [just works](https://www.youtube.com/watch?v=YPN0qhSyWy8) ensure the following JavaScript features are available; If not get some [polyfills](https://github.com/zloirock/core-js) or consider using a transpiler 🐱‍🐉.
 
@@ -102,7 +103,7 @@ To ensure that _fuckbrain_ [just works](https://www.youtube.com/watch?v=YPN0qhSy
 
 
 
-### *Basic Usage* 🛠
+### 🛠 *Basic Usage*
 
 To run basic brainfuck code, with as little configuration as possible:
 
@@ -170,7 +171,7 @@ console.log(myWriter.data.join(""));
 
 
 
-### Advanced Usage 🦸‍♂️
+###  🦸‍♂️ Advanced Usage
 
 > **All this settings are optional and have defaults if not defined;**
 
@@ -224,18 +225,20 @@ console.log(myWriter.data.join(""));
 
   The function passed takes four arguments; **`machine`** a reference to the machine instance running the brainfuck code this includes all its properties and methods,  **`code`** an array containing all instructions waiting to be executed ( NOTE this is not the code passed to  **`machine.run()`** as a first argument but a filtered version containing only _viable_ instructions ),  **`input`**a reference to the input iterator passed to **`machine.run()`**as a second argument, **`output`** a reference to the output object passed as a third argument to  **`machine.run()`**.
 
-### *The Machine Instance* ⚙
+###  ⚙ *The Machine Instance*
 
 A "machine" is what runs your brainfuck. I assume you know how brainfuck works. It has a **`tape`**, which is basically an "infinite" array of cells initialized at zero. A **`pointer`** which points to a specific cell in the **`tape`**. Also your brainfuck code is an array of instructions. An execution pointer points to an instruction in that array. A **`machine`** has all this represented as properties, you can access and them alter them:
 
 ```javascript
 import Machine from "fuckbrain.min.mjs";
 let machine = new Machine();
+
 machine.pointer // [ Number ] Points to the current memory location on the tape 
 machine.tape // [ TypedArray ] The tape
 machine.execution // [ Number ] Points the current instruction in the current code
 machine.stack // [ Number Array ] A stack for popping and pushing "[" and "]" refferences
 machine.metadata // { Object } This allows you to attach some arbitrary data
+
 machine.terminate() // terminates and resets the machine
 ```
 
@@ -243,7 +246,7 @@ machine.terminate() // terminates and resets the machine
 
 All this properties are reset after your brainfuck is done executing. No need to create another machine instance to run more brainfuck, just **`machine.run()`**  again.
 
-### *Example* 🤘
+### 🤘 *Example*
 
 We want to give brainfuck the following features:
 
@@ -277,11 +280,11 @@ console.log(output.join("")); // ♦♦
 // I call this brainfuck flavour: "bagfuck"
 ```
 
-
-
 ---
 
-### *Implementation Details* 👌
+
+
+### 👌 *Implementation Details*
 
 *  **`0 - 1 == 255`**, values wrap around.
 * The memory pointer does not wrap around, therefore **`machine.pointer - 0 == 0`**
@@ -290,3 +293,12 @@ console.log(output.join("")); // ♦♦
 
 > These are for the **Machine.InstructionSet** default libraries, you can obviously create your own instruction set from bottom to top with vastly different rules. 
 
+---
+
+
+
+### 🎁 *Extras*
+
+* I would really love some feedback.
+* For any issues, go [here](https://github.com/sokorototo/fuckbrain/issues).
+* Give me you best and worst opinions on my code.

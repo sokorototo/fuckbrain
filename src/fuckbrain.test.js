@@ -7,10 +7,10 @@
  *  [Classes and Static Methods] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)
  */
 
-import Machine from "./fuckbrain.max.mjs";
-import {readFileSync} from "fs";
+"use strict";
+const Machine = require("../build/fuckbrain.min.js");
+const { readFileSync } = require("fs")
 
-console.clear();
 let machine = new Machine({ cellSize: 3 });
 
 [
