@@ -1,17 +1,18 @@
-<p align="center"><img src="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png"
-        alt="Bootstrap logo" width="180" height="180"></p>
-<h1 align=center><strong>f*ckbrain</strong></h1>
-<p style="color: red; font-wieght: bold; text-align: center">Note fuckbrain is still in very early stages of
-    development, the API is obviously susceptible to change. You can test the API tho</p>
-<p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,
+<p align="center">
+    <img src="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png"alt="Bootstrap logo" width="180" height="180">
 </p>
+<h1 align=center>
+    <strong>f*ckbrain</strong>
+</h1>
+<p style="color: red; font-weight: bold; text-align: center">Note fuckbrain is still in very early stages of development, the API is obviously susceptible to change. You can test the API tho</p>
+<p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,</p>
 <p align=center> Customizable and Easy to use · Works in Node and Deno · Contains seceral variants* of Brainfuck </p>
-
-<p align=center><img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"><img alt="npm"
-        src="https://img.shields.io/npm/dw/fuckbrain"><img alt="npm bundle size"
-        src="https://img.shields.io/bundlephobia/min/fuckbrain"><a
-        href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues"
-            src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a></p>
+<p align=center>
+    <img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"> · 
+    <img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"> · 
+    <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"> · 
+    <a href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a>
+</p>
 <p align=center><a href="https://www.npmjs.com/package/fuckbrain">npm</a> · <a> deno.land </a></p>
 
 
