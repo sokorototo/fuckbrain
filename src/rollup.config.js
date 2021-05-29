@@ -17,7 +17,7 @@ export default [
             format: 'es'
         },
         plugins: [ uglify({
-            ie8: false
+            ie8: true
         }) ]
     }
 ];

@@ -4,9 +4,8 @@
 <h1 align=center>
     <strong>f*ckbrain</strong>
 </h1>
-<p style="color: red; font-weight: bold; text-align: center">Note fuckbrain is still in very early stages of development, the API is obviously susceptible to change. You can test the API tho</p>
 <p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,</p>
-<p align=center> Customizable and Easy to use · Works in Node and Deno · Contains seceral variants* of Brainfuck </p>
+<p align=center> Customizable and Easy to use · Works in Node and Deno · Contains several variants* of Brainfuck </p>
 <p align=center>
     <img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"> · 
     <img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"> · 
