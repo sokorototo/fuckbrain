@@ -1,6 +1,6 @@
 {
   "name": "fuckbrain",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "A simple customizable brainfuck interpreter",
   "main": "build/fuckbrain.min.js",
   "repository": "https://github.com/sokorototo/fuckbrain",
@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup --config ./src/rollup.config.js",
-    "test": "node ./src/fuckbrain.test.js"
+    "test": "node ./src/fuckbrain.test.js && deno run --allow-read --allow-net src/deno.test.js"
   },
   "files": [
     "build/"

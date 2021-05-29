@@ -1,7 +1,8 @@
 "use strict";
 const Machine = require("../build/fuckbrain.min.js");
-const { readFileSync } = require("fs")
+console.log("Running Node.js tests: \n");
 
+const { readFileSync } = require("fs")
 let machine = new Machine({ cellSize: 3 });
 
 [
@@ -18,9 +19,6 @@ let machine = new Machine({ cellSize: 3 });
 .map(file => {
     const then = Date.now();
     machine.run(readFileSync(file, "utf8"), Machine.StringInputGenerator("b1b1bbb1c1c11111d"), {
-        write( char ){
-            process.stdout.write(char)
-        },
         complete( output ){
             console.log(`\n[FILENAME] => ${file},\n[OUTPUT BYTES] => ${output.length * 8},\nExecution took: ${Date.now() - then}ms.\n`);
         }
