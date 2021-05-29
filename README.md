@@ -12,7 +12,7 @@
     <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"> · 
     <a href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a>
 </p>
-<p align=center><a href="https://www.npmjs.com/package/fuckbrain">npm</a> · <a> deno.land </a></p>
+<p align=center><a href="https://www.npmjs.com/package/fuckbrain">npm</a> · <a href="#deno"> deno.land </a></p>
 
 
 
@@ -85,6 +85,11 @@ In the build directory is an es6 module of the library. The main|default import 
 
 ```javascript
 import Machine from "fuckbrain.min.mjs";
+```
+
+##### Deno
+```javascript
+import Machine from "https://cdn.jsdelivr.net/npm/fuckbrain/build/fuckbrain.min.mjs";
 ```
 
 ---

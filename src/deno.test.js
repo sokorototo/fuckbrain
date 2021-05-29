@@ -15,7 +15,8 @@ let promises = [
     "examples/jabh.bf",
     "examples/cell-size-5.bf",
     "examples/passtest.bf"
-].map( readFileSync );
+]
+.map( readFileSync );
 
 Promise.all(promises).then(files => {
     files.map(file => {
