@@ -16,7 +16,6 @@ let machine = new Machine({ cellSize: 3 });
 [
     "examples/bench/skiploop.bf",
     "examples/oobrain.bf",
-    "examples/char.bf",
     "examples/asciiart/chess.bf",
     "examples/password-vault.bf",
     "examples/reverse.bf",
