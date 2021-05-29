@@ -1,5 +1,5 @@
 "use strict";
-import Machine from "../build/fuckbrain.min.mjs";
+import Machine from "https://cdn.jsdelivr.net/npm/fuckbrain/build/fuckbrain.min.mjs";
 const readFileSync = (filename) => Deno.readTextFile(filename).then( data => { return { data ,name: filename } });
 
 let machine = new Machine({ cellSize: 3 });

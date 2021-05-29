@@ -1,6 +1,6 @@
 {
   "name": "fuckbrain",
-  "version": "0.8.2",
+  "version": "0.8.4",
   "description": "A simple customizable brainfuck interpreter",
   "main": "build/fuckbrain.min.js",
   "repository": "https://github.com/sokorototo/fuckbrain",
@@ -11,7 +11,7 @@
     "test": "node ./src/fuckbrain.test.js"
   },
   "files": [
-    "./build/"
+    "build/"
   ],
   "devDependencies": {
     "rollup": "^2.50.4",
