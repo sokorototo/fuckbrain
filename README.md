@@ -300,3 +300,4 @@ console.log(output.join("")); // ♦♦
 * I would really love some feedback.
 * For any issues, go [here](https://github.com/sokorototo/fuckbrain/issues).
 * Give me you best and worst opinions on my code.
+* Please leave a [star](https://github.com/sokorototo/fuckbrain/stargazers)
