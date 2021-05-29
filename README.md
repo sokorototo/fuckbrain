@@ -5,7 +5,7 @@
     <strong>f*ckbrain</strong>
 </h1>
 <p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,</p>
-<p align=center> Customizable and Easy to use · Works in Node and Deno · Contains several variants* of Brainfuck </p>
+<p align=center> Customizable and Easy to use · Works in Node and Deno </p>
 <p align=center>
     <img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"> · 
     <img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"> · 
@@ -99,11 +99,7 @@ To ensure that _fuckbrain_ [just works](https://www.youtube.com/watch?v=YPN0qhSy
 >
 > ​	[Symbol.iterator] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)*
 >
-> [Array Methods] (https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function, https://eloquentjavascript.net/05_higher_order.html)*
->
 > [Maps] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)*
->
-> [Classes and Static Methods] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)*
 
 ---
 
@@ -186,7 +182,7 @@ console.log(myWriter.data.join(""));
   ```javascript
   import Machine from "fuckbrain.min.mjs";
   let myMachine = new Machine({
-      // 4500 cells
+      // 4500 cells, defaults to 30000
       length: 4500
   });
   ```
@@ -198,28 +194,18 @@ console.log(myWriter.data.join(""));
   ```javascript
   import Machine from "fuckbrain.min.mjs";
   let myMachine = new Machine({
-      // 16 bits per cell, -- MUST be a power of 2 --
+      // 16 bits per cell, -- MUST be a power of 2, defaults to 8 bits per cell --
       cellSize: 16
   });
   ```
 
   
 
-* _Specify what flavour of Extended Brainfuck to use_:
+* _Define your own custom instructions:_ Define a function that is bound to an instruction. This function is called when the instruction is met along the tape. It also gives the instruction meaning and prevents it from getting filtered out during optimizations. Use this to add debugging functionality or extend the **`InstructionSet`** in many various creative and *spooky* ways. To maintain basic functionality I advice extending the built-in instruction set instead of building on from the ground up on your own, you can if you want tho;
 
   ```javascript
   import Machine from "fuckbrain.min.mjs";
-  let myMachine = new Machine({
-      //  [REFFERENCE] https://esolangs.org/wiki/Extended_Brainfuck
-      InstructionSet: Machine.InstructionSet(2) // Type II
-  });
-  ```
-
-* _Define your own custom instructions:_ Define a function that is bound to an instruction. This function is called when the instruction is met along the tape. It also gives the instruction meaning and prevents it from getting filtered out during optimizations. Use this to add debugging functionality or extend the **`InstructionSet`** in many various creative and *spooky* ways. To maintain basic functionality I advice extending the built-in instruction sets instead of building on from the ground up on your own;
-
-  ```javascript
-  import Machine from "fuckbrain.min.mjs";
-  let custom = Machine.InstructionSet(1); // A JavaScript map
+  let custom = Machine.InstructionSet(); // A JavaScript map
   custom.set("!", (machine, code, input, output) => {
       // A debug instruction that spits out some information
       console.log(`[STACK, POINTER]`, machine.stack, machine.pointer)
@@ -230,6 +216,7 @@ console.log(myWriter.data.join(""));
   ```
 
   The function passed takes four arguments; **`machine`** a reference to the machine instance running the brainfuck code this includes all its properties and methods,  **`code`** an array containing all instructions waiting to be executed ( NOTE this is not the code passed to  **`machine.run()`** as a first argument but a filtered version containing only _viable_ instructions ),  **`input`**a reference to the input iterator passed to **`machine.run()`**as a second argument, **`output`** a reference to the output object passed as a third argument to  **`machine.run()`**.
+
 
 ###  ⚙ *The Machine Instance*
 
@@ -263,7 +250,7 @@ We want to give brainfuck the following features:
 
 ```javascript
 import Machine from "fuckbrain.min.mjs";
-let custom = Machine.InstructionSet(1); // A JavaScript map
+let custom = Machine.InstructionSet(); // A JavaScript map
 custom.set("^", (machine) => {
     // Put data from storage to current cell
     // Does nothing if value in storage is undefined
@@ -297,7 +284,7 @@ console.log(output.join("")); // ♦♦
 * If input **`Iterator`** finishes all further input prompts default to **`0`**
 * Outputs `String` values by default. Input 
 
-> These are for the **Machine.InstructionSet** default libraries, you can obviously create your own instruction set from bottom to top with vastly different rules. 
+> These are for the default **Machine.InstructionSet**, you can obviously create your own instruction set from bottom to top with vastly different rules. 
 
 ---
 

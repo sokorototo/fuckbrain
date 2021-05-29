@@ -79,7 +79,7 @@ class Machine{
         this.__continue = true;
     }
     
-    static InstructionSet( type = 1 ){
+    static InstructionSet(){
         let InstructionSet = new Map();
         InstructionSet.set("+", (machine) => {
             machine.tape[machine.pointer] ++
@@ -138,20 +138,10 @@ class Machine{
                 return;
             };
 
-            // next.calue must be either a number or a string
+            // next.value must be a number
             if (typeof next.value != "number") throw new Error("Encountered input not of type Number");
             machine.tape[machine.pointer] = next.value || 0;
         });
-
-        // Extra Varinats
-        switch (type) {
-            case 2:
-                // Brainfuck Type 2
-                break;
-            case 3:
-                // Brainfuck Type 3
-                break;
-        }
 
         return InstructionSet
     }
