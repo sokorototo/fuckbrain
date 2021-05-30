@@ -20,7 +20,7 @@
 
 ----
 
-##### _fuckbrain_ is a dead simple brainfuck interpreter. It has no dependencies. _fuckbrain_ also comes with some helper functionality like detailed error reporting and customizable input and output streaming. The interpreter does not offer any form of optimizations, yet. Besides various aspects of a given `Machine` instance, ( what runs the .bf ) can be customized; bits per cell, length of the tape and its `InstructionSet`. 
+##### _fuckbrain_ is a dead simple brainfuck interpreter. It has no dependencies. _fuckbrain_ also comes with some helper functionality like detailed error reporting and customizable input and output streaming. The interpreter does not offer any form of optimizations, yet. Besides various aspects of a given `Machine` instance, ( what runs the .bf ) can be customized; bits per cell, length of the tape and its `InstructionSet`. You can try a demo [here](https://sokorototo.github.io/fuckbrain/).  
 
 ----
 
