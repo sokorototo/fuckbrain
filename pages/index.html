@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuckbrain Demo</title>
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png">
+    <style>
+        :root{
+            --background: #064f6e;
+            --select: #c2ae93;
+            --code-font: monospace;
+        }
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+            font-weight: bold;
+            outline: #253122;
+        }
+        *::selection{
+            background-color: var(--select);
+            color: white;
+        }
+
+        html, body{
+            width: 100vw;
+            height: 100vh;
+        }
+        html{
+            background-color: var(--background);
+        }
+        
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        textarea{
+            font-family: var(--code-font);
+            font-weight: 200;
+            resize: none;
+        }
+
+        main{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-width: 60em;
+            width: 60vw;
+            background-color: #97acc8;
+            box-shadow: 5px 5px 10px 2px #012331;
+            border-radius: 0.5em;
+        }
+        main > article[input]{
+            height: 100%;
+            display: grid;
+            grid-template-rows: 1fr 15fr 1fr 15fr;
+            align-items: center;
+        }
+        main > article[input] > textarea{
+            height: 95%;
+            margin: 0.2em;
+            padding: 1em;
+            border: 2px solid #294754;
+            border-radius: 0.5em;
+        }
+        main > article[input] > p{
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        main > article[output]{
+            display: grid;
+            grid-template-rows: 12fr 1fr;
+            margin: 0.2em;
+            border-radius: 0.5em;
+            background-color: #023506;
+            border: 2px solid #294754;
+        }
+        main > article[output] > button{
+            font-size: large;
+            font-weight: 100;
+            margin: 0.2em;
+            border-radius: 0.5em;
+        }
+        main > article[output] > textarea{
+            border-radius: 0.5em;
+            padding: 1em;
+            margin: 0.2em;
+            font-weight: 100;
+            background-color: #02274f;
+            color: #00dfb6;
+            line-height: 1em;
+            overflow-y: scroll;
+        }
+        main > article[output] > textarea::selection{
+            background-color: #00df4a;
+            color: white;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <article input>
+            <p>Code 👨‍💻</p>
+            <textarea id="code" cols="30" rows="10"></textarea>
+            <p>Input 🍔</p>
+            <textarea type="text" id="input"></textarea>
+        </article>
+        <article output>
+            <textarea readonly cols="50" rows="20" id="output"></textarea>
+            <button id="run"> EXECUTE </button>
+        </article>
+    </main>
+    <script defer="true">
+        // DOM
+        const input = document.getElementById("input")
+        ,code = document.getElementById("code")
+        ,output = document.getElementById("output")
+        ,run = document.getElementById("run");
+        let toggle = true;
+
+        // Utils
+        const clear = () => output.textContent = "";
+        const write = (text) => output.textContent = text;
+        const fetchInput = () => input.value;
+        const getCode = () => code.value;
+        const flip = () => {
+            toggle = !toggle;
+            switch (toggle) {
+                case false:
+                    run.textContent = "LOADING...";
+                    run.disabled = true;
+                    break;
+                case true:
+                    run.textContent = " EXECUTE ";
+                    run.disabled = false;
+                    break;
+            }
+        };
+
+        // Main
+        let worker = new Worker("worker.js");
+        run.addEventListener("mouseup", () => {
+            worker.postMessage(JSON.stringify({
+                code: getCode(),
+                input: fetchInput()
+            }));
+            flip();
+        });
+        worker.addEventListener("message", (evt) => {
+            let data = JSON.parse(evt.data);
+            if (data.error) {
+                clear();
+                write(`[ERROR] ${data.output}`);
+                return flip();
+            };
+            clear();
+            write(data.output);
+            flip();
+        })
+    </script>
+</body>
+</html>

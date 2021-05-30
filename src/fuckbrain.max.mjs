@@ -43,7 +43,7 @@ class Machine{
             if(this.InstructionSet.has(instruction)) brainfuck.push(instruction);
         }
 
-        while (true) {
+        while (true && brainfuck.length != 0) {
             if(! this.__continue) break;
             try{
                 let instruction = brainfuck[this.execution];
