@@ -288,7 +288,7 @@ console.log(output.join("")); // ♦♦
 *  **`0 - 1 == 255`**, values wrap around.
 * The memory pointer does not wrap around, therefore **`machine.pointer - 0 == 0`**
 * If input **`Iterator`** finishes all further input prompts default to **`0`**
-* Outputs `String` values by default. Input 
+* Outputs `Number` values by default. Input in`String` format.
 
 > These are for the default **Machine.InstructionSet**, you can obviously create your own instruction set from bottom to top with vastly different rules. 
 
