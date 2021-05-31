@@ -7,6 +7,7 @@
 <p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,</p>
 <p align=center> Customizable and Easy to use · Works in Node and Deno </p>
 <p align=center>
+    <img alt="NPM" src="https://img.shields.io/npm/l/fuckbrain"> · 
     <img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"> · 
     <img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"> · 
     <img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"> · 

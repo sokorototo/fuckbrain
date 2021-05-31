@@ -43,6 +43,7 @@
             font-family: var(--code-font);
             font-weight: 200;
             resize: none;
+            user-select: contain;
         }
 
         main{
@@ -71,6 +72,7 @@
             display: block;
             width: 100%;
             text-align: center;
+            user-select: none;
         }
         main > article[output]{
             display: grid;
@@ -107,12 +109,12 @@
     <main>
         <article input>
             <p>Code 👨‍💻</p>
-            <textarea id="code" cols="30" rows="10"></textarea>
+            <textarea id="code" cols="30" rows="10" spellcheck="false"></textarea>
             <p>Input 🍔</p>
             <textarea type="text" id="input"></textarea>
         </article>
         <article output>
-            <textarea readonly cols="50" rows="20" id="output"></textarea>
+            <textarea readonly cols="50" rows="20" id="output" spellcheck="false"></textarea>
             <button id="run"> EXECUTE </button>
         </article>
     </main>
