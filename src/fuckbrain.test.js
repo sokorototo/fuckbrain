@@ -1,8 +1,8 @@
 "use strict";
+const { readFileSync } = require("fs")
 const Machine = require("../build/fuckbrain.min.js");
 console.log("Running Node.js tests: \n");
 
-const { readFileSync } = require("fs")
 let machine = new Machine({ cellSize: 3 });
 
 [
