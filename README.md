@@ -161,14 +161,14 @@ import Machine from "fuckbrain.min.mjs";
 let tt = "--------[-->+++<]>.."; // The text "tt"
 let myMachine = new Machine();
 let outputWriter = {
+    data: [],
     write( char ){
         this.data.push("s" + char + "er")
     },
     complete( output ){
         // Called with the same output that would be returned by machine.run()
         console.log( output ); // -> [ "t", "t" ]
-    },
-    data: []
+    }
 };
 myMachine.run(tt, Machine.BrowserPromptInputGenerator(), outputWriter);
 console.log(myWriter.data.join(""));
@@ -181,7 +181,7 @@ console.log(myWriter.data.join(""));
 
 ###  🦸‍♂️ Advanced Usage
 
-> **All this settings are optional and have defaults if not defined;**
+> **All these settings are optional and have defaults if not defined;**
 
 * _Manually set the length of the tape_: 
 
@@ -221,12 +221,12 @@ console.log(myWriter.data.join(""));
   });
   ```
 
-  The function passed takes four arguments; **`machine`** a reference to the machine instance running the brainfuck code this includes all its properties and methods,  **`code`** an array containing all instructions waiting to be executed ( NOTE this is not the code passed to  **`machine.run()`** as a first argument but a filtered version containing only _viable_ instructions ),  **`input`**a reference to the input iterator passed to **`machine.run()`**as a second argument, **`output`** a reference to the output object passed as a third argument to  **`machine.run()`**.
+  The function passed takes four arguments; **`machine`** a reference to the machine instance running the brainfuck code, this includes all its properties and methods,  **`code`** an array containing all instructions waiting to be executed ( NOTE this is not the code passed to  **`machine.run()`** as a first argument but a filtered version containing only _viable_ instructions ),  **`input`**a reference to the input iterator passed to **`machine.run()`**as a second argument, **`output`** a reference to the output object passed as a third argument to  **`machine.run()`**.
 
 
 ###  ⚙ *The Machine Instance*
 
-A "machine" is what runs your brainfuck. I assume you know how brainfuck works. It has a **`tape`**, which is basically an "infinite" array of cells initialized at zero. A **`pointer`** which points to a specific cell in the **`tape`**. Also your brainfuck code is an array of instructions. An execution pointer points to an instruction in that array. A **`machine`** has all this represented as properties, you can access and them alter them:
+A "machine" is what runs your brainfuck. I assume you know how brainfuck works. It has a **`tape`**, which is basically an "infinite" array of cells initialized at zero. A **`pointer`** which points to a specific cell in the **`tape`**. Also your brainfuck code is an array of instructions. An execution pointer points to an instruction in that array. A **`machine`** has all these represented as properties, you can access and them alter them:
 
 ```javascript
 import Machine from "fuckbrain.min.mjs";
@@ -243,7 +243,7 @@ machine.terminate() // terminates and resets the machine
 
 
 
-All this properties are reset after your brainfuck is done executing. No need to create another machine instance to run more brainfuck, just **`machine.run()`**  again.
+All these properties are reset after your brainfuck is done executing. No need to create another machine instance to run more brainfuck, just **`machine.run()`**  again.
 
 ### 🤘 *Example*
 

@@ -1,6 +1,6 @@
 {
   "name": "fuckbrain",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple customizable brainfuck interpreter",
   "main": "build/fuckbrain.min.js",
   "repository": "https://github.com/sokorototo/fuckbrain",
