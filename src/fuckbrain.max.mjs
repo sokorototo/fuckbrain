@@ -38,12 +38,12 @@ class Machine{
     run(code, input, output) {
         let brainfuck = [];
         for (let instruction of code) {
-            // filter out unwanted invalid Instructions for speeeeeed
+            // filter out characters that are not instructions for speeeeeed
             if(this.InstructionSet.has(instruction)) brainfuck.push(instruction);
         };
 
         while (true && brainfuck.length != 0) {
-            if(! this.__continue) break;
+            if( !this.__continue ) break;
             try{
                 let instruction = brainfuck[this.execution];
                 this.InstructionSet.get(instruction)(this, brainfuck, input, output);
@@ -93,10 +93,13 @@ class Machine{
             if (machine.pointer < (machine.tape.length - 1)) machine.pointer ++;
         });
         InstructionSet.set("[", (machine, brainfuck) => {
-            if (machine.execution  == brainfuck.length - 1) throw new Error(`Unmatched "[" at last position: ${machine.pointer}`); // The last "[" obviously has no pair
+            // If the "[" is at the last position, it obviously has no matching "]"
+            if (machine.execution  == brainfuck.length - 1) throw new Error(`Unmatched "[" at last position: ${machine.pointer}`);
+
+            // Basic "[" operation, if value at memory pointer is non zero then push this "[" to the stack and go on
             if (machine.tape[machine.pointer] != 0) return machine.stack.push(machine.execution);
             
-            // Jump If Zero
+            // If value at memory pointer is zero, find matching "]"
             let tracker = 1;
             while (true) {
                 machine.execution ++;
@@ -112,7 +115,9 @@ class Machine{
                 }
 
                 if (tracker == 0) return; // Matching "["" found
-                if (machine.execution >= (brainfuck.length - 1)) throw new Error(`Unmatched "[" at position: ${machine.pointer}`); // End of brainfuck input
+
+                // End of brainfuck input
+                if (machine.execution >= (brainfuck.length - 1)) throw new Error(`Unmatched "["`);
             }
         });
         InstructionSet.set("]", (machine) => {
@@ -124,22 +129,22 @@ class Machine{
             machine.execution = machine.stack[machine.stack.length - 1];
         });
         InstructionSet.set(".", (machine, _, __, output) => {
-            let currentValue = String.fromCharCode(machine.tape[machine.pointer]);
+            let currentValue = String.fromCodePoint(machine.tape[machine.pointer]);
             if(!!output){
                 if(typeof output.write == "function") output.write(currentValue);
             };
             machine.output.push(currentValue);
         })
         InstructionSet.set(",", (machine, _, input) => {
-            let next = input.next();
+            let next = input.next(), pointer = machine.pointer;
             if (next.done) {
-                machine.tape[machine.pointer] = 0;
+                machine.tape[pointer] = 0;
                 return;
             };
 
             // next.value must be a number
             if (typeof next.value != "number") throw new Error("Encountered input not of type Number");
-            machine.tape[machine.pointer] = next.value || 0;
+            machine.tape[pointer] = next.value || 0;
         });
 
         return InstructionSet

@@ -6,7 +6,9 @@ console.log("Running Node.js tests: \n");
 let machine = new Machine({ cellSize: 3 });
 
 [
+    "examples/bench/prttab.bf",
     "examples/bench/skiploop.bf",
+    "examples/quine/selfportrait.bf",
     "examples/oobrain.bf",
     "examples/asciiart/chess.bf",
     "examples/password-vault.bf",
@@ -16,10 +18,11 @@ let machine = new Machine({ cellSize: 3 });
     "examples/cell-size-1.bf"
 ]
 .map(file => {
-    const then = Date.now();
+    console.time(`[PERFOMANCE] => ${file}, took`);
     machine.run(readFileSync(file, "utf8"), Machine.StringInputGenerator("b1b1bbb1c1c11111d"), {
         complete( output ){
-            console.log(`\n[FILENAME] => ${file},\n[OUTPUT BYTES] => ${output.length * 8},\nExecution took: ${Date.now() - then}ms.\n`);
+            console.log(`\n[FILENAME] => ${file},\n[OUTPUT BYTES] => ${output.length * 8}`);
+            console.timeEnd(`[PERFOMANCE] => ${file}, took`);
         }
     })
 });
