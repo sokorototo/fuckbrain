@@ -35,13 +35,12 @@ class Machine{
         this.InstructionSet = config.InstructionSet || Machine.InstructionSet(1);
     }
 
-    run(initial, input, output) {
-        let brainfuck = [], iterations = initial.length;
-        for (let i = 0; i < iterations; i++) {
+    run(code, input, output) {
+        let brainfuck = [];
+        for (let instruction of code) {
             // filter out unwanted invalid Instructions for speeeeeed
-            const instruction = initial[i];
             if(this.InstructionSet.has(instruction)) brainfuck.push(instruction);
-        }
+        };
 
         while (true && brainfuck.length != 0) {
             if(! this.__continue) break;
@@ -153,7 +152,7 @@ class Machine{
             next(){
                 if (this.index > (this.input.length - 1)) return { done: true, value: 0 };
                 this.index ++;
-                return { done: false, value: this.input[this.index - 1].charCodeAt(0) }
+                return { done: false, value: this.input[this.index - 1].codePointAt(0) }
             },
 
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol
@@ -165,7 +164,7 @@ class Machine{
             question,
             next(){
                 let answer = prompt(question, "");
-                if(!!answer) return { done: false, value: answer.charCodeAt(0) };
+                if(!!answer) return { done: false, value: answer.codePointAt(0) };
                 return { done: true, value: 0 }
             },
             [Symbol.iterator](){ return this }

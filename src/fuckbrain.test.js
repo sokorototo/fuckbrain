@@ -13,8 +13,7 @@ let machine = new Machine({ cellSize: 3 });
     "examples/reverse.bf",
     "examples/utm.bf",
     "examples/jabh.bf",
-    "examples/cell-size-5.bf",
-    "examples/passtest.bf"
+    "examples/cell-size-1.bf"
 ]
 .map(file => {
     const then = Date.now();
@@ -24,3 +23,5 @@ let machine = new Machine({ cellSize: 3 });
         }
     })
 });
+
+console.log("All tests passed!");
