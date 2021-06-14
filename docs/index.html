@@ -9,6 +9,7 @@
         :root{
             --background: #064f6e;
             --select: #c2ae93;
+            --unit-height: 95vh;
             --code-font: monospace;
         }
         *{
@@ -33,6 +34,7 @@
         }
         
         body{
+            scale: 0.95;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,6 +43,7 @@
 
         textarea{
             font-family: var(--code-font);
+            font-size: 1vw;
             font-weight: 200;
             resize: none;
             user-select: contain;
@@ -49,14 +52,14 @@
         main{
             display: grid;
             grid-template-columns: 1fr 1fr;
-            min-width: 60em;
-            width: 60vw;
+            width: 80vw;
+            height: var(--unit-height);
             background-color: #97acc8;
             box-shadow: 5px 5px 10px 2px #012331;
             border-radius: 0.5em;
         }
         main > article[input]{
-            height: 100%;
+            height: var(--unit-height);
             display: grid;
             grid-template-rows: 1fr 15fr 1fr 15fr;
             align-items: center;
@@ -70,23 +73,18 @@
         }
         main > article[input] > p{
             display: block;
-            width: 100%;
+            font-size: 1vw;
             text-align: center;
             user-select: none;
         }
         main > article[output]{
+            height :var(--unit-height);
             display: grid;
             grid-template-rows: 12fr 1fr;
-            margin: 0.2em;
+            padding: 0.2em;
             border-radius: 0.5em;
             background-color: #023506;
             border: 2px solid #294754;
-        }
-        main > article[output] > button{
-            font-size: large;
-            font-weight: 100;
-            margin: 0.2em;
-            border-radius: 0.5em;
         }
         main > article[output] > textarea{
             border-radius: 0.5em;
@@ -103,6 +101,43 @@
             color: white;
             font-weight: 300;
         }
+        main > article[output] > div{
+            display: flex;
+            align-items: stretch;
+        }
+        main > article[output] > div > button#erase{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: white;
+            background-color: #f20039;
+            width: 10%;
+            margin: 0.2em;
+            border-radius: 0.5em;
+            border: 2px solid #ff9cac;
+            height: 85%;
+        }
+        main > article[output] > div > button#erase:active{
+            background-color: white;
+            color: #f20039;
+        }
+        main > article[output] > div > button > svg{ size: 100%; }
+        main > article[output] > div > button#run{
+            font-size: 1vw;
+            font-weight: 100;
+            margin: 0.2em;
+            border-radius: 0.5em;
+            width: 100%;
+            border: 2px solid #ff9cac;
+        }
+        main > article[output] > div > button:active{
+            background-color: lime;
+            color: white;
+            border: 3px solid white;
+            text-shadow: black 0 0 5px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -115,7 +150,16 @@
         </article>
         <article output>
             <textarea readonly cols="50" rows="20" id="output" spellcheck="false"></textarea>
-            <button id="run"> EXECUTE </button>
+            <div>
+                <button id="erase" title="Clear Output">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace-fill"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z" />
+                    </svg>
+                </button>
+                <button id="run" title="Run Your Brainfuck"> EXECUTE </button>
+            </div>
         </article>
     </main>
     <script defer="true">
@@ -123,7 +167,8 @@
         const input = document.getElementById("input")
         ,code = document.getElementById("code")
         ,output = document.getElementById("output")
-        ,run = document.getElementById("run");
+        ,run = document.getElementById("run")
+        , erase = document.getElementById("erase");
         let toggle = true;
         code.value = 
 `[ 99 Bottles of Beer in Brainf*** by Eric Bock - ebock@uswest.net ]
@@ -169,11 +214,11 @@
 +++.[-]<<<[>>+>+>+<<<<-]>>[<<+>>-]<[>+>+>>+<<<<-]>[<+>-]>]`;
 
         // Utils
-        const clear = () => output.textContent = "";
-        const write = (text) => output.textContent = text;
-        const fetchInput = () => input.value;
-        const getCode = () => code.value;
-        const flip = () => {
+        const clear = () => output.textContent = ""
+        , write = (text) => output.textContent = text
+        , fetchInput = () => input.value
+        , getCode = () => code.value
+        , flip = () => {
             toggle = !toggle;
             switch (toggle) {
                 case false:
@@ -196,6 +241,7 @@
             }));
             flip();
         });
+        erase.addEventListener("mouseup", clear);
         worker.addEventListener("message", (evt) => {
             let data = JSON.parse(evt.data);
             if (data.error) {
