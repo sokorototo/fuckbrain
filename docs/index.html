@@ -1,177 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.9">
-    <title>Fuckbrain Demo</title>
-    <link rel="shortcut icon" href="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png">
-    <style>
-        :root{
-            --background: #064f6e;
-            --select: #c2ae93;
-            --unit-height: 95vh;
-            --code-font: monospace;
-        }
-        *{
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-            font-family: sans-serif;
-            font-weight: bold;
-            outline: #253122;
-        }
-        *::selection{
-            background-color: var(--select);
-            color: white;
-        }
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=0.8">
+	<title>Fuckbrain Demo</title>
+	<link rel="shortcut icon"
+		href="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png">
+	<style>
+		:root {
+			--background: #064f6e;
+			--select: #c2ae93;
+			--unit-height: 95vh;
+			--code-font: monospace;
+		}
 
-        html, body{
-            width: 100vw;
-            height: 100vh;
-        }
-        html{
-            background-color: var(--background);
-        }
-        
-        body{
-            scale: 0.95;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+		* {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+			font-family: sans-serif;
+			font-weight: bold;
+			outline: #253122;
+		}
 
-        textarea{
-            font-family: var(--code-font);
-            font-size: 1vw;
-            font-weight: 200;
-            resize: none;
-            user-select: contain;
-        }
+		*::selection {
+			background-color: var(--select);
+			color: white;
+		}
 
-        main{
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 80vw;
-            height: var(--unit-height);
-            background-color: #97acc8;
-            box-shadow: 5px 5px 10px 2px #012331;
-            border-radius: 0.5em;
-        }
-        main > article[input]{
-            height: var(--unit-height);
-            display: grid;
-            grid-template-rows: 1fr 15fr 1fr 15fr;
-            align-items: center;
-        }
-        main > article[input] > textarea{
-            height: 95%;
-            margin: 0.2em;
-            padding: 1em;
-            border: 2px solid #294754;
-            border-radius: 0.5em;
-        }
-        main > article[input] > p{
-            display: block;
-            font-size: 1vw;
-            text-align: center;
-            user-select: none;
-        }
-        main > article[output]{
-            height :var(--unit-height);
-            display: grid;
-            grid-template-rows: 12fr 1fr;
-            padding: 0.2em;
-            border-radius: 0.5em;
-            background-color: #023506;
-            border: 2px solid #294754;
-        }
-        main > article[output] > textarea{
-            border-radius: 0.5em;
-            padding: 1em;
-            margin: 0.2em;
-            font-weight: 100;
-            background-color: #02274f;
-            color: #00dfb6;
-            line-height: 1em;
-            overflow-y: scroll;
-        }
-        main > article[output] > textarea::selection{
-            background-color: #00df4a;
-            color: white;
-            font-weight: 300;
-        }
-        main > article[output] > div{
-            display: flex;
-            align-items: stretch;
-        }
-        main > article[output] > div > button#erase{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: white;
-            background-color: #f20039;
-            width: 10%;
-            margin: 0.2em;
-            border-radius: 0.5em;
-            border: 2px solid #ff9cac;
-            height: 85%;
-        }
-        main > article[output] > div > button#erase:active{
-            background-color: white;
-            color: #f20039;
-        }
-        main > article[output] > div > button > svg{ size: 100%; }
-        main > article[output] > div > button#run{
-            font-size: 1vw;
-            font-weight: 100;
-            margin: 0.2em;
-            border-radius: 0.5em;
-            width: 100%;
-            border: 2px solid #ff9cac;
-        }
-        main > article[output] > div > button:active{
-            background-color: lime;
-            color: white;
-            border: 3px solid white;
-            text-shadow: black 0 0 5px;
-            font-weight: bold;
-        }
-    </style>
+		html,
+		body {
+			width: 100vw;
+			height: 100vh;
+		}
+
+		html {
+			background-color: var(--background);
+		}
+
+		body {
+			scale: 0.95;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		textarea {
+			font-family: var(--code-font);
+			font-size: 1vw;
+			font-weight: 200;
+			resize: none;
+			user-select: contain;
+		}
+
+		main {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			width: 80vw;
+			height: var(--unit-height);
+			background-color: #97acc8;
+			box-shadow: 5px 5px 10px 2px #012331;
+			border-radius: 0.5em;
+		}
+
+		main>article[input] {
+			height: var(--unit-height);
+			display: grid;
+			grid-template-rows: 1fr 15fr 1fr 15fr;
+			align-items: center;
+		}
+
+		main>article[input]>textarea {
+			height: 95%;
+			margin: 0.2em;
+			padding: 1em;
+			border: 2px solid #294754;
+			border-radius: 0.5em;
+		}
+
+		main>article[input]>p {
+			display: block;
+			font-size: 1vw;
+			text-align: center;
+			user-select: none;
+		}
+
+		main>article[output] {
+			height: var(--unit-height);
+			display: grid;
+			grid-template-rows: 12fr 1fr;
+			padding: 0.2em;
+			border-radius: 0.5em;
+			background-color: #023506;
+			border: 2px solid #294754;
+		}
+
+		main>article[output]>textarea {
+			border-radius: 0.5em;
+			padding: 1em;
+			margin: 0.2em;
+			font-weight: 100;
+			background-color: #02274f;
+			color: #00dfb6;
+			line-height: 1em;
+			overflow-y: scroll;
+		}
+
+		main>article[output]>textarea::selection {
+			background-color: #00df4a;
+			color: white;
+			font-weight: 300;
+		}
+
+		main>article[output]>div {
+			display: flex;
+			align-items: stretch;
+		}
+
+		main>article[output]>div>button#erase {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			color: white;
+			background-color: #f20039;
+			width: 10%;
+			margin: 0.2em;
+			border-radius: 0.5em;
+			border: 2px solid #ff9cac;
+			height: 85%;
+		}
+
+		main>article[output]>div>button#erase:active {
+			background-color: white;
+			color: #f20039;
+		}
+
+		main>article[output]>div>button>svg {
+			size: 100%;
+		}
+
+		main>article[output]>div>button#run {
+			font-size: 1vw;
+			font-weight: 100;
+			margin: 0.2em;
+			border-radius: 0.5em;
+			width: 100%;
+			border: 2px solid #ff9cac;
+		}
+
+		main>article[output]>div>button:active {
+			background-color: lime;
+			color: white;
+			border: 3px solid white;
+			text-shadow: black 0 0 5px;
+			font-weight: bold;
+		}
+		.github-corner:hover .octo-arm {
+			animation: octocat-wave 560ms ease-in-out
+		}
+
+		@keyframes octocat-wave {
+
+			0%,
+			100% {
+				transform: rotate(0)
+			}
+
+			20%,
+			60% {
+				transform: rotate(-25deg)
+			}
+
+			40%,
+			80% {
+				transform: rotate(10deg)
+			}
+		}
+
+		@media (max-width:500px) {
+			.github-corner:hover .octo-arm {
+				animation: none
+			}
+
+			.github-corner .octo-arm {
+				animation: octocat-wave 560ms ease-in-out
+			}
+		}
+	</style>
 </head>
+
 <body>
-    <main>
-        <article input>
-            <p>Code 👨‍💻</p>
-            <textarea id="code" cols="30" rows="10" spellcheck="false"></textarea>
-            <p>Input 🍔</p>
-            <textarea type="text" id="input"></textarea>
-        </article>
-        <article output>
-            <textarea readonly cols="50" rows="20" id="output" spellcheck="false"></textarea>
-            <div>
-                <button id="erase" title="Clear Output">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace-fill"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z" />
-                    </svg>
-                </button>
-                <button id="run" title="Run Your Brainfuck"> EXECUTE </button>
-            </div>
-        </article>
-    </main>
-    <script defer="true">
-        // DOM
-        const input = document.getElementById("input")
-        ,code = document.getElementById("code")
-        ,output = document.getElementById("output")
-        ,run = document.getElementById("run")
-        , erase = document.getElementById("erase");
-        let toggle = true;
-        code.value = 
-`[ 99 Bottles of Beer in Brainf*** by Eric Bock - ebock@uswest.net ]
+	
+	<a href="https://github.com/sokorototo/fuckbrain" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80"
+			viewBox="0 0 250 250"
+			style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);"
+			aria-hidden="true">
+			<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+			<path
+				d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+				fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+			<path
+				d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+				fill="currentColor" class="octo-body"></path>
+		</svg>
+	</a>
+
+	<main>
+		<article input>
+			<p>Code 👨‍💻</p>
+			<textarea id="code" cols="30" rows="10" spellcheck="false"></textarea>
+			<p>Input 🍔</p>
+			<textarea type="text" id="input"></textarea>
+		</article>
+		<article output>
+			<textarea readonly cols="50" rows="20" id="output" spellcheck="false"></textarea>
+			<div>
+				<button id="erase" title="Clear Output">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+						class="bi bi-backspace-fill" viewBox="0 0 16 16">
+						<path
+							d="M15.683 3a2 2 0 0 0-2-2h-7.08a2 2 0 0 0-1.519.698L.241 7.35a1 1 0 0 0 0 1.302l4.843 5.65A2 2 0 0 0 6.603 15h7.08a2 2 0 0 0 2-2V3zM5.829 5.854a.5.5 0 1 1 .707-.708l2.147 2.147 2.146-2.147a.5.5 0 1 1 .707.708L9.39 8l2.146 2.146a.5.5 0 0 1-.707.708L8.683 8.707l-2.147 2.147a.5.5 0 0 1-.707-.708L7.976 8 5.829 5.854z" />
+					</svg>
+				</button>
+				<button id="run" title="Run Your Brainfuck"> EXECUTE </button>
+			</div>
+		</article>
+	</main>
+
+	<script defer="true">
+		// DOM
+		const input = document.getElementById("input")
+			, code = document.getElementById("code")
+			, output = document.getElementById("output")
+			, run = document.getElementById("run")
+			, erase = document.getElementById("erase");
+		let toggle = true;
+		code.value =
+			`[ 99 Bottles of Beer in Brainf*** by Eric Bock - ebock@uswest.net ]
 
 +++++++++>+++++++++>>>++++++[<+++>-]+++++++++>+++++++++>>>>>>+++++++++++++[<+++
 +++>-]>+++++++++++[<++++++++++>-]<+>>++++++++[<++++>-]>+++++++++++[<++++++++++>
@@ -213,46 +281,47 @@
 ]>[.>>]<<<[-]>[-]>>>>>[>]>>>>[.>>]>>[.>>]>>[.>>]<[.<<]<[<]<<<<[<]<<<<<<]+++++++
 +++.[-]<<<[>>+>+>+<<<<-]>>[<<+>>-]<[>+>+>>+<<<<-]>[<+>-]>]`;
 
-        // Utils
-        const clear = () => output.textContent = ""
-        , write = (text) => output.textContent = text
-        , fetchInput = () => input.value
-        , getCode = () => code.value
-        , flip = () => {
-            toggle = !toggle;
-            switch (toggle) {
-                case false:
-                    run.textContent = "LOADING...";
-                    run.disabled = true;
-                    break;
-                case true:
-                    run.textContent = " EXECUTE ";
-                    run.disabled = false;
-                    break;
-            }
-        };
+		// Utils
+		const clear = () => output.textContent = ""
+			, write = (text) => output.textContent = text
+			, fetchInput = () => input.value
+			, getCode = () => code.value
+			, flip = () => {
+				toggle = !toggle;
+				switch (toggle) {
+					case false:
+						run.textContent = "LOADING...";
+						run.disabled = true;
+						break;
+					case true:
+						run.textContent = " EXECUTE ";
+						run.disabled = false;
+						break;
+				}
+			};
 
-        // Main
-        let worker = new Worker("worker.js");
-        run.addEventListener("mouseup", () => {
-            worker.postMessage(JSON.stringify({
-                code: getCode(),
-                input: fetchInput()
-            }));
-            flip();
-        });
-        erase.addEventListener("mouseup", clear);
-        worker.addEventListener("message", (evt) => {
-            let data = JSON.parse(evt.data);
-            if (data.error) {
-                clear();
-                write(`[ERROR] ${data.output}`);
-                return flip();
-            };
-            clear();
-            write(data.output);
-            flip();
-        })
-    </script>
+		// Main
+		let worker = new Worker("worker.js");
+		run.addEventListener("mouseup", () => {
+			worker.postMessage(JSON.stringify({
+				code: getCode(),
+				input: fetchInput()
+			}));
+			flip();
+		});
+		erase.addEventListener("mouseup", clear);
+		worker.addEventListener("message", (evt) => {
+			let data = JSON.parse(evt.data);
+			if (data.error) {
+				clear();
+				write(`[ERROR] ${data.output}`);
+				return flip();
+			};
+			clear();
+			write(data.output);
+			flip();
+		})
+	</script>
 </body>
+
 </html>

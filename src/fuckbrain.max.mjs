@@ -14,7 +14,7 @@ class Machine{
         switch (config.cellSize || 1) {
             // Bits per cell
             case 1: 
-                // Meaning undefned cellSize, since it defaulted to 1
+                // Meaning undefined cellSize, since it defaulted to 1
                 this.tape = new Uint8Array(this.length);
                 break;
             case 8:
