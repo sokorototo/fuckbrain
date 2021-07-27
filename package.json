@@ -1,6 +1,6 @@
 {
   "name": "fuckbrain",
-  "version": "1.0.4",
+  "version": "1.2.0",
   "description": "A simple customizable brainfuck interpreter",
   "main": "build/fuckbrain.min.js",
   "repository": "https://github.com/sokorototo/fuckbrain",
@@ -16,5 +16,15 @@
   "devDependencies": {
     "rollup": "^2.50.4",
     "rollup-plugin-uglify": "^6.0.4"
-  }
+  },
+  "keywords": [
+	  "brainfuck",
+	  "interpreter",
+	  "simple",
+	  "customizable",
+	  "javascript",
+	  "esolang",
+	  "fuckbrain",
+	  "bf"
+  ]
 }
