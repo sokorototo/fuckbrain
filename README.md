@@ -18,7 +18,7 @@
 ----
 ### 🐣  _Introduction_
 
-##### _fuckbrain_ is a dead simple brainfuck interpreter. It has no dependencies. _fuckbrain_ also comes with some helper functionality like detailed error reporting and customizable input and output streaming. The interpreter does not offer any form of optimizations, yet. Besides various aspects of a given `Machine` instance, ( what runs the .bf ) can be customized; bits per cell, length of the tape and its `InstructionSet`. You can try a demo [here](https://sokorototo.github.io/fuckbrain/).  
+##### _fuckbrain_ is a dead simple brainfuck interpreter. It has no dependencies nor bloat. Uses a loop instead of recursion. Covers the full, ( yet small ) brainfuck language spec, correctly. _fuckbrain_ also comes with detailed error reporting and customizable input and output streaming. The interpreter does not offer any form of optimizations, yet. Besides various aspects of a given `Machine` instance, ( what runs the .bf ) can be customized; bits per cell, length of the tape and its `InstructionSet`. You can try a demo [here](https://sokorototo.github.io/fuckbrain/).  
 ----
 ### 🥼 _Why I made this_
 
@@ -221,17 +221,17 @@ import Machine from "fuckbrain.min.mjs";
 
 let machine = new Machine();
 
-machine.pointer // [ Number ] Points to the current memory location on the tape 
+machine.pointer // ( Number ) The memory pointer's location along the tape
 
-machine.tape // [ TypedArray ] The tape
+machine.execution // ( Number ) The instruction pointer's location along the instruction tape
 
-machine.execution // [ Number ] Points the current instruction in the current code
+machine.tape // ( TypedArray ) The tape
 
-machine.stack // [ Number Array ] A stack for popping and pushing "[" and "]" refferences
+machine.stack // [ Number ] The stack, used for storing the last location of a "[" instruction within the instruction tape
 
-machine.metadata // { Object } This allows you to attach some arbitrary data
+machine.metadata // ( Object ) This allows you to attach some arbitrary data
 
-machine.terminate() // terminates and resets the machine
+machine.terminate() // Terminates and resets the machine
 ```
 All these properties are reset after your brainfuck is done executing. No need to create another machine instance to run more brainfuck, just **`machine.run()`**  again.
 
@@ -250,20 +250,19 @@ import Machine from "fuckbrain.min.mjs";
 
 let custom = Machine.InstructionSet(); // A JavaScript map
 
-custom.set("^", (machine) => {
-    // Put data from storage to current cell
-    // Does nothing if value in storage is undefined
-    machine.tape[ machine.pointer ] = machine.metadata.storage || machine.tape[ machine.pointer ];
+custom.set("v", (machine) => {
+	// Read data from current cell and put to storage
+	machine.metadata.storage = machine.tape[machine.pointer];
 });
 
-custom.set("v", (machine) => {
-    // Read data from current cell and put to storage
-    machine.metadata.storage = machine.tape[ machine.pointer ];
+custom.set("^", (machine) => {
+	// Read data from storage and inject into current cell
+	machine.tape[machine.pointer] = machine.metadata.storage || machine.tape[machine.pointer];
 });
 
 custom.set("#", (machine) => {
-    // Kill the machine
-    machine.terminate();
+	// Kill the machine
+	machine.terminate();
 });
 
 let machine = new Machine({ InstructionSet: custom });
