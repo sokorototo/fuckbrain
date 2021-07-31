@@ -25,7 +25,7 @@
 - I love code, its what I do 🥽.
 - I was watching a video by [TheHappieCat](https://youtu.be/-3C200nCwpk), and I thought to myself, "Hmm, I could probably write a brainfuck interpreter."
 - To prove to myself I ain't a cabbage-potato programmer. ¯\\\_(ツ)_/¯
-- I wanted to learn what precautions go into implementing a programming language, ( spoilers they are a **ALOT** ).
+- I wanted to learn how to write an interpreter.
 - I want to design a programming language someday, an [esotlang](https://en.wikipedia.org/wiki/Esoteric_programming_language) maybe?
 
 ---
@@ -88,7 +88,7 @@ import Machine from "https://cdn.jsdelivr.net/npm/fuckbrain/build/fuckbrain.min.
 
 To ensure that _fuckbrain_ [just works](https://www.youtube.com/watch?v=YPN0qhSyWy8) ensure the following JavaScript features are available; If not get some [polyfills](https://github.com/zloirock/core-js) or consider using a transpiler 🐱‍🐉.
 
-> [Interators] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)*
+> [Iterators] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)*
 >
 > ​	[Symbol.iterator] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)*
 >
