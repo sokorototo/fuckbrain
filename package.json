@@ -1,14 +1,14 @@
 {
   "name": "fuckbrain",
-  "version": "1.2.2",
-  "description": "A simple customizable brainfuck interpreter",
+  "version": "1.2.5",
+  "description": "A simple customizable brainfuck interpreter, that actually works",
   "main": "build/fuckbrain.min.js",
   "repository": "https://github.com/sokorototo/fuckbrain",
   "author": "Newton Toto <nyachiengatoto@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "rollup --config ./src/rollup.config.js",
-    "test": "node --prof ./src/fuckbrain.test.js && deno run --allow-read --allow-net src/deno.test.js"
+    "test": "node ./src/fuckbrain.test.mjs && deno run --allow-read --allow-net src/deno.test.js"
   },
   "files": [
     "build/"

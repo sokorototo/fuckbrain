@@ -1,7 +1,12 @@
 {
 	"cSpell.ignoreWords": [
+		"asciiart",
 		"brainfuck",
 		"ckbrain",
-		"octo"
-	]
+		"jabh",
+		"octo",
+		"oobrain",
+		"skiploop"
+	],
+	"cSpell.enabled": false
 }
