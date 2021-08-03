@@ -30,4 +30,6 @@ Promise.all(promises).then(files => {
 			}
 		})
 	});
-})
+});
+
+console.log("All tests passed!");
