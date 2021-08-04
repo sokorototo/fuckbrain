@@ -1,19 +1,21 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png"alt="Bootstrap logo" width="180" height="180">
+	 <img src="https://raw.githubusercontent.com/sokorototo/fuckbrain/master/media/fuckbrain%20logo.png"alt="Bootstrap logo" width="180" height="180">
 </p>
 <h1 align=center>
-    <strong>f*ckbrain</strong>
+	 <strong>f*ckbrain</strong>
 </h1>
 <p align=center> Another <a href="https://esolangs.org/wiki/Brainfuck">Brainfuck</a> interpreter written in JavaScript,</p>
-<p align=center> Customizable and Easy to use · Works in Node and Deno </p>
+<p align=center> - Customizable and Easy to use · Works in the Browser, Node and Deno - </p>
 <p align=center>
-    <a href="https://github.com/sokorototo/fuckbrain"><img alt="NPM" src="https://img.shields.io/npm/l/fuckbrain"></a> · 
-    <a href="https://www.npmjs.com/package/fuckbrain"><img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"></a> · 
-    <a href="https://www.npmjs.com/package/fuckbrain"><img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"></a> · 
-    <a href="https://bundlephobia.com/package/fuckbrain"><img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"></a> · 
-    <a href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a>
+	 <a href="https://github.com/sokorototo/fuckbrain"><img alt="NPM" src="https://img.shields.io/npm/l/fuckbrain"></a> | 
+	 <a href="https://www.npmjs.com/package/fuckbrain"><img alt="npm" src="https://img.shields.io/npm/v/fuckbrain"></a> | 
+	 <a href="https://www.npmjs.com/package/fuckbrain"><img alt="npm" src="https://img.shields.io/npm/dw/fuckbrain"></a> | 
+	 <a href="https://bundlephobia.com/package/fuckbrain"><img alt="npm bundle size" src="https://img.shields.io/bundlephobia/min/fuckbrain"></a> | 
+	 <a href="https://github.com/sokorototo/fuckbrain/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/sokorototo/fuckbrain"></a>
 </p>
-<p align=center><a href="https://www.npmjs.com/package/fuckbrain">npm</a> · <a href="#deno"> deno.land </a></p>
+<p align=center>
+	<a href="https://www.npmjs.com/package/fuckbrain">npm</a> | <a href="#deno">deno.land</a> | <a href="https://sokorototo.github.io/fuckbrain/">Try it</a>
+</p>
 
 ----
 ### 🐣  _Introduction_
@@ -34,13 +36,13 @@
 ##### CDN.
 Deliver the package via a cdn:
   - jsdelivr:
-    ```http
-    https://cdn.jsdelivr.net/npm/fuckbrain
-    ```
+	 ```http
+	 https://cdn.jsdelivr.net/npm/fuckbrain
+	 ```
 - unpkg:
-    ```http
-    https://unpkg.com/fuckbrain
-    ```
+	 ```http
+	 https://unpkg.com/fuckbrain
+	 ```
 
 ##### npm.
 
@@ -153,14 +155,14 @@ let tt = "--------[-->+++<]>.."; // The text "tt"
 let myMachine = new Machine();
 
 let outputWriter = {
-    data: [],
-    write( char ){
-        this.data.push("s" + char + "er")
-    },
-    complete( output ){
-        // Called with the same output that would be returned by machine.run()
-        console.log( output ); // -> [ "t", "t" ]
-    }
+	 data: [],
+	 write( char ){
+		  this.data.push("s" + char + "er")
+	 },
+	 complete( output ){
+		  // Called with the same output that would be returned by machine.run()
+		  console.log( output ); // -> [ "t", "t" ]
+	 }
 };
 
 myMachine.run(tt, Machine.BrowserPromptInputGenerator(), outputWriter);
@@ -178,8 +180,8 @@ console.log(myWriter.data.join(""));
   import Machine from "fuckbrain.min.mjs";
 
   let myMachine = new Machine({
-      // 4500 cells, defaults to 30000
-      length: 4500
+		// 4500 cells, defaults to 30000
+		length: 4500
   });
   ```
 
@@ -189,8 +191,8 @@ console.log(myWriter.data.join(""));
   import Machine from "fuckbrain.min.mjs";
 
   let myMachine = new Machine({
-      // 16 bits per cell, -- MUST be a power of 2, defaults to 8 bits per cell --
-      cellSize: 16
+		// 16 bits per cell, -- MUST be a power of 2, defaults to 8 bits per cell --
+		cellSize: 16
   });
   ```
 
@@ -202,12 +204,12 @@ console.log(myWriter.data.join(""));
   let custom = Machine.InstructionSet(); // A JavaScript map
 
   custom.set("!", (machine, code, input, output) => {
-      // A debug instruction that spits out some information
-      console.log(`[STACK, POINTER]`, machine.stack, machine.pointer)
+		// A debug instruction that spits out some information
+		console.log(`[STACK, POINTER]`, machine.stack, machine.pointer)
   });
 
   let myMachine = new Machine({
-      InstructionSet: custom
+		InstructionSet: custom
   });
   ```
 
