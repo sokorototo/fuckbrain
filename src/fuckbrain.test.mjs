@@ -23,7 +23,7 @@ let machine = new Machine({ cellSize: 3 });
 	console.time(`[PERFORMANCE] => ${file}, took`);
 	machine.run(readFileSync(file, "utf8"), Machine.StringInputGenerator("132\n"), {
 		complete(output) {
-			console.log(`\n[FILENAME] => ${file},\n[OUTPUT BYTES] => ${output.length * 8}\n`);
+			console.log(`\n[FILENAME] => ${file},\n[OUTPUT BYTES] => ${output.length * 8}`);
 			console.timeEnd(`[PERFORMANCE] => ${file}, took`);
 		}
 	})
