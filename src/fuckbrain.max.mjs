@@ -80,18 +80,17 @@ class Machine{
 	 
 	 static InstructionSet(){
 		  const InstructionSet = new Map();
-		  InstructionSet.set("+", (machine) => {
-				machine.tape[machine.pointer] ++
-		  });
-		  InstructionSet.set("-", (machine) => {
-				machine.tape[machine.pointer] --
-		  });
+
+		  InstructionSet.set("+", (machine) => { machine.tape[machine.pointer] ++ });
+		  InstructionSet.set("-", (machine) => { machine.tape[machine.pointer] -- });
+
 		  InstructionSet.set("<", (machine) => {
 				if (machine.pointer > 0) machine.pointer --;
 		  });
 		  InstructionSet.set(">", (machine) => {
 				if (machine.pointer < (machine.tape.length - 1)) machine.pointer ++;
 		  });
+
 		  InstructionSet.set("[", (machine, brainfuck) => {
 				// If the "[" is at the last position, it obviously has no matching "]"
 				if (machine.execution  === brainfuck.length - 1) throw new Error(`Unmatched "[" at last position: ${machine.pointer}`);
