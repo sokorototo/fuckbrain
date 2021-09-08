@@ -104,11 +104,11 @@ To run basic brainfuck code, with as little configuration as possible:
 ```javascript
 import Machine from "fuckbrain.min.mjs";
 
-let brainfuck = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
+let code = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
 
 let myMachine = new Machine();
 
-let output = myMachine.run(brainfuck);
+let output = myMachine.run(code);
 
 console.log(output);
 // -> ["H", "e", "l", "l", "o", ",", " ", "w", "o", "r", "l", "d", "!"]
