@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup --config ./src/rollup.config.js",
-    "test": "node ./src/fuckbrain.test.mjs && deno run --allow-read --allow-net src/deno.test.js"
+    "test": "node ./src/fuckbrain.test.mjs"
   },
   "files": [
     "build/"
