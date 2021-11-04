@@ -1,6 +1,6 @@
 importScripts(["https://cdn.jsdelivr.net/npm/fuckbrain"]);
 let machine = new Machine();
-console.log("[WORKER]", "Successfully initalized");
+console.log("[WORKER]", "Successfully initialized");
 
 this.addEventListener("message", ( evt ) => {
     try {
