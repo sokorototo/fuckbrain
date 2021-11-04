@@ -1,6 +1,10 @@
 "use strict";
 class Machine {
-	constructor(config) {
+	constructor(config = {
+		InstructionSet: Machine.InstructionSet(),
+		cellSize: 8,
+		length: 30000
+	}) {
 		// Default State Initialization
 		this.pointer = 0;
 		this.output = [];
@@ -10,8 +14,8 @@ class Machine {
 		this.__continue = true;
 
 		// Configurable State Initialization
-		this.length = config?.length || 30000;
-		switch (config?.cellSize || 1) {
+		this.length = config.length || 30000;
+		switch (config.cellSize || 1) {
 			// Bits per cell
 			case 1:
 				// Meaning undefined cellSize, since it defaulted to 1
@@ -32,7 +36,7 @@ class Machine {
 				this.tape = new Uint8Array(this.length);
 				break;
 		}
-		this.InstructionSet = config.InstructionSet || Machine.InstructionSet(1);
+		this.InstructionSet = config.InstructionSet || Machine.InstructionSet();
 	}
 
 	run(code, input, output) {
