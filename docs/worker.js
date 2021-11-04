@@ -2,9 +2,9 @@ importScripts(["https://cdn.jsdelivr.net/npm/fuckbrain"]);
 let machine = new Machine();
 console.log("[WORKER]", "Successfully initialized");
 
-this.addEventListener("message", ( evt ) => {
+this.addEventListener("message", (evt) => {
     try {
-        let {code, input} = JSON.parse(evt.data), then = Date.now();
+        let { code, input } = JSON.parse(evt.data), then = Date.now();
         let output = machine.run(code, Machine.StringInputGenerator(input)).join("");
         postMessage(JSON.stringify({
             error: false,
