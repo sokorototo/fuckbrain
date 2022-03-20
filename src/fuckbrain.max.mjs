@@ -1,4 +1,5 @@
 "use strict";
+
 class Machine {
 	constructor(config = {
 		InstructionSet: Machine.InstructionSet(),
@@ -36,6 +37,7 @@ class Machine {
 				this.tape = new Uint8Array(this.length);
 				break;
 		}
+
 		this.InstructionSet = config.InstructionSet || Machine.InstructionSet();
 	}
 
@@ -46,7 +48,7 @@ class Machine {
 			if (this.InstructionSet.has(instruction)) brainfuck.push(instruction);
 		};
 
-		while (true && brainfuck.length !== 0) {
+		while (brainfuck.length !== 0) {
 			if (!this.__continue) break;
 			try {
 				const instruction = brainfuck[this.execution];
